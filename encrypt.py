@@ -29,7 +29,7 @@ def main(args):
         iterations=100000,
         salt=("0" * 16).encode('utf-8'),
         backend=default_backend())
-    key = base64.urlsafe_b64encode(kdf.derive(args.key))
+    key = base64.urlsafe_b64encode(kdf.derive(args.key[0].encode('utf-8')))
     fern = fernet.Fernet(key)
     output_list = []
     for inc in INCLUDE:
@@ -55,6 +55,7 @@ def main(args):
     else:
         print("Encrypt/Decrypt option not specified")
         return FAILURE
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser("Accepts the key via stdin as well")
